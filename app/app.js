@@ -1,4 +1,5 @@
 const cards = document.querySelector('.cards');
+const ul = document.querySelector('ul');
 const countryAPI = 'https://restcountries.com/v3.1/all'
 const countryInfos = `Some quick example text to build on the card title and make up the bulk of the card's content.`
 
@@ -62,10 +63,30 @@ const textInfo = (textTile, info) => {
 
 const populateCards = async () => {
     const infos = await openAPI(countryAPI);
-    console.log(infos)
     infos.forEach((info,index) => {
         createCard(infos[index].flags.svg,infos[index].name.common, infos[index].population, infos[index].region, infos[index].capital[index]);
     });
 }
+
+createLi = el => {
+    const li = createElement('li','dropdown-item');
+    li.textContent = el;
+    ul.appendChild(li)
+}
+
+createListUL = async () => {
+    let region = [];
+    const infos = await openAPI(countryAPI);
+    infos.forEach((info,index) => {
+        if(region.includes(infos[index].region)){
+            return;
+        }
+        region.push(infos[index].region);
+        createLi(infos[index].region);
+    })
+}
+
+createListUL();
+
 populateCards();
 openAPI(countryAPI);
