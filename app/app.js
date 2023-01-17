@@ -1,6 +1,5 @@
 const input = document.querySelector('input');
-const dropdownMenu = document.querySelector('.dropdown-toggle');
-const ul = document.querySelector('ul');
+const select = document.querySelector('select');
 const cardsArea = document.querySelector('.cards');
 const countryAPI = 'https://restcountries.com/v3.1/all'
 const countryInfos = `Some quick example text to build on the card title and make up the bulk of the card's content.`
@@ -71,13 +70,13 @@ const populateCards = async () => {
     });
 }
 
-createLi = (el, region) => {
-    const li = createElement('li',`dropdown-item ${region}`);
-    li.textContent = el;
-    ul.appendChild(li)
+createOpt = (el, region) => {
+    const option = createElement('option',`dropdown-item ${region}`);
+    option.textContent = el;
+    select.appendChild(option)
 }
 
-createListUL = async () => {
+createList = async () => {
     let region = [];
     const infos = await openAPI(countryAPI);
     infos.forEach((_,index) => {
@@ -85,27 +84,30 @@ createListUL = async () => {
             return;
         }
         region.push(infos[index].region);
-        createLi(infos[index].region,infos[index].region);
+        createOpt(infos[index].region,infos[index].region);
     })
 }
 
-const filterCards = ({ target }) => {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach((card,index) => {
-        card.classList.add('d-none');
-        if(card.dataset.region.toLowerCase().includes(target.value.toLowerCase())){
-            card.classList.remove('d-none')
+const filterCards = (value,el) => {
+    el.forEach(item => {
+        item.classList.add('d-none');
+        if(item.dataset.region.toLowerCase().includes(value.toLowerCase())){
+            item.classList.remove('d-none')
         }
     })
 }
 
-createListUL();
+createList();
 populateCards();
 openAPI(countryAPI);
 
 input.addEventListener('keyup', e => {
+    const cards = document.querySelectorAll('.card');
     e.preventDefault();
-    filterCards(e);
+    filterCards(e.target.value,cards);
 })
 
-console.log(dropdownMenu)
+select.addEventListener('click', (e) => {
+    const cards = document.querySelectorAll('.card');
+    filterCards(e.target.value,cards);
+})
