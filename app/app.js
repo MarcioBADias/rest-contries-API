@@ -28,19 +28,23 @@ const createElement = (tag, className) => {
 
 const createCard = (img, countryName, countryPopulation, countryRegion, countryCapital) => {
     const card = createElement('div', 'card mb-4');
-    card.style.width = '18rem';
     const cardImg = createElement('img', 'card-img-top');
-    cardImg.setAttribute('src', `${img}`);
-    cardImg.style.maxHeight = '140px';
     const cardBody = createElement('div', 'card-body');
     const cardTitle = createElement('h5', 'card-title');
-    cardTitle.textContent = `${countryName}`
     const cardPopulation = createElement('p', 'card-text');
-    cardPopulation.textContent = `${countryPopulation}`
     const cardRegion = createElement('p', 'card-text');
-    cardRegion.textContent = `${countryRegion}`
     const cardCapital = createElement('p', 'card-text');
-    cardCapital.textContent = `${countryCapital}`
+
+
+    card.style.width = '18rem';
+
+    cardImg.setAttribute('src', `${img}`);
+    cardImg.style.height = '100%';
+
+    cardTitle.textContent = `${countryName}`
+    cardPopulation.innerHTML = textInfo('Population', countryPopulation)
+    cardRegion.innerHTML = textInfo('Region', countryRegion)
+    cardCapital.innerHTML = textInfo('Capital', countryCapital)
     
     card.appendChild(cardImg);
     card.appendChild(cardBody);
@@ -52,7 +56,7 @@ const createCard = (img, countryName, countryPopulation, countryRegion, countryC
 }
 
 const textInfo = (textTile, info) => {
-    const el = `${textTile}: ${info}`
+    const el = `<strong>${textTile}</strong>: ${info}`
     return el;
 }
 
@@ -60,7 +64,7 @@ const populateCards = async () => {
     const infos = await openAPI(countryAPI);
     console.log(infos)
     infos.forEach((info,index) => {
-        createCard(infos[index].flags.svg,infos[index].name.common, textInfo('Population',infos[index].population), textInfo('Region',infos[index].region), textInfo('Capital' ,infos[index].capital[index]));
+        createCard(infos[index].flags.svg,infos[index].name.common, infos[index].population, infos[index].region, infos[index].capital[index]);
     });
 }
 populateCards();
