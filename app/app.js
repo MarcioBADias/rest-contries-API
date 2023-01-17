@@ -1,5 +1,7 @@
-const cards = document.querySelector('.cards');
+const input = document.querySelector('input');
+const dropdownMenu = document.querySelector('.dropdown-toggle');
 const ul = document.querySelector('ul');
+const cardsArea = document.querySelector('.cards');
 const countryAPI = 'https://restcountries.com/v3.1/all'
 const countryInfos = `Some quick example text to build on the card title and make up the bulk of the card's content.`
 
@@ -38,6 +40,7 @@ const createCard = (img, countryName, countryPopulation, countryRegion, countryC
 
 
     card.style.width = '18rem';
+    card.setAttribute('data-region', `${countryName} ${countryRegion}`)
 
     cardImg.setAttribute('src', `${img}`);
     cardImg.style.height = '100%';
@@ -53,7 +56,7 @@ const createCard = (img, countryName, countryPopulation, countryRegion, countryC
     cardBody.appendChild(cardPopulation);
     cardBody.appendChild(cardRegion);
     cardBody.appendChild(cardCapital);
-    cards.appendChild(card);
+    cardsArea.appendChild(card);
 }
 
 const textInfo = (textTile, info) => {
@@ -63,13 +66,13 @@ const textInfo = (textTile, info) => {
 
 const populateCards = async () => {
     const infos = await openAPI(countryAPI);
-    infos.forEach((info,index) => {
+    infos.forEach((_,index) => {
         createCard(infos[index].flags.svg,infos[index].name.common, infos[index].population, infos[index].region, infos[index].capital[index]);
     });
 }
 
-createLi = el => {
-    const li = createElement('li','dropdown-item');
+createLi = (el, region) => {
+    const li = createElement('li',`dropdown-item ${region}`);
     li.textContent = el;
     ul.appendChild(li)
 }
@@ -77,16 +80,32 @@ createLi = el => {
 createListUL = async () => {
     let region = [];
     const infos = await openAPI(countryAPI);
-    infos.forEach((info,index) => {
+    infos.forEach((_,index) => {
         if(region.includes(infos[index].region)){
             return;
         }
         region.push(infos[index].region);
-        createLi(infos[index].region);
+        createLi(infos[index].region,infos[index].region);
+    })
+}
+
+const filterCards = ({ target }) => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card,index) => {
+        card.classList.add('d-none');
+        if(card.dataset.region.toLowerCase().includes(target.value.toLowerCase())){
+            card.classList.remove('d-none')
+        }
     })
 }
 
 createListUL();
-
 populateCards();
 openAPI(countryAPI);
+
+input.addEventListener('keyup', e => {
+    e.preventDefault();
+    filterCards(e);
+})
+
+console.log(dropdownMenu)
