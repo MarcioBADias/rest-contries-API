@@ -26,35 +26,42 @@ const createElement = (tag, className) => {
     return el;
 }
 
-const createCard = (img, countryName, countryInfos) => {
+const createCard = (img, countryName, countryPopulation, countryRegion, countryCapital) => {
     const card = createElement('div', 'card mb-4');
     card.style.width = '18rem';
     const cardImg = createElement('img', 'card-img-top');
     cardImg.setAttribute('src', `${img}`);
+    cardImg.style.maxHeight = '140px';
     const cardBody = createElement('div', 'card-body');
     const cardTitle = createElement('h5', 'card-title');
     cardTitle.textContent = `${countryName}`
-    const cardText = createElement('p', 'card-text');
-    cardText.textContent = `${countryInfos}`
+    const cardPopulation = createElement('p', 'card-text');
+    cardPopulation.textContent = `${countryPopulation}`
+    const cardRegion = createElement('p', 'card-text');
+    cardRegion.textContent = `${countryRegion}`
+    const cardCapital = createElement('p', 'card-text');
+    cardCapital.textContent = `${countryCapital}`
     
     card.appendChild(cardImg);
     card.appendChild(cardBody);
     cardBody.appendChild(cardTitle);
-    cardBody.appendChild(cardText);
+    cardBody.appendChild(cardPopulation);
+    cardBody.appendChild(cardRegion);
+    cardBody.appendChild(cardCapital);
     cards.appendChild(card);
+}
+
+const textInfo = (textTile, info) => {
+    const el = `${textTile}: ${info}`
+    return el;
 }
 
 const populateCards = async () => {
     const infos = await openAPI(countryAPI);
     console.log(infos)
     infos.forEach((info,index) => {
-        createCard(infos[index].flags.svg,infos[index].name.common, countryInfos);
+        createCard(infos[index].flags.svg,infos[index].name.common, textInfo('Population',infos[index].population), textInfo('Region',infos[index].region), textInfo('Capital' ,infos[index].capital[index]));
     });
 }
 populateCards();
 openAPI(countryAPI);
-
-
-// console.log('capital: ',api[0].capital[0])
-// console.log('região: ',api[0].region)
-// console.log('população: ',api[0].population)
