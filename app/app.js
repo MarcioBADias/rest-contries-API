@@ -1,8 +1,10 @@
+const main = document.querySelector('main');
+const header = document.querySelector('header');
 const input = document.querySelector('input');
 const select = document.querySelector('select');
 const cardsArea = document.querySelector('.cards');
+const button = document.querySelector('button');
 const countryAPI = 'https://restcountries.com/v3.1/all'
-const countryInfos = `Some quick example text to build on the card title and make up the bulk of the card's content.`
 
 const getAPI = async url => {
     const response = await fetch(url)
@@ -97,6 +99,8 @@ const filterCards = (value,el) => {
     })
 }
 
+const toggleColor = (el, color) => el.setAttribute('class', color);
+
 createList();
 populateCards();
 openAPI(countryAPI);
@@ -107,7 +111,13 @@ input.addEventListener('keyup', e => {
     filterCards(e.target.value,cards);
 })
 
-select.addEventListener('click', (e) => {
+select.addEventListener('click', e => {
     const cards = document.querySelectorAll('.card');
     filterCards(e.target.value,cards);
+})
+
+button.addEventListener('click', () => {
+    const cards = document.querySelectorAll('.card');
+    toggleColor(header, 'bg-secondary')
+    toggleColor(main,'bg-dark');    
 })
