@@ -4,4 +4,48 @@
     padding: 0;
 }
 
+.form-control{
+    padding-left: 2.5rem;
+    position: relative;
+}
+
+header button{
+    position: relative;
+}
+
+.glass-icon, .dark-and-light-icon{
+    position: absolute;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    color: #333;
+}
+
+.dark-and-light-icon{
+    top: 5.5vh;
+    left: 70vw;
+}
+
+.light-icon{
+    display: none;
+}
+
+.glass-icon{
+    top: 17vh;
+    left: 7vw;
+}
+
+header button + .dark-and-light-icon:hover{
+    box-shadow: 5px 5px 5px 5px rgba(28, 95, 172, 0.733);
+}
+
+textarea:focus, .form-control:focus {
+    background-color: #fff;
+    box-shadow: 0 0 0 0;
+    padding-left: 2.5rem;
+    outline: 0;
+ }
+
+ textarea:focus,.material-symbols-outlined:focus{
+    display:none;
+ }
 
