@@ -4,7 +4,7 @@ const input = document.querySelector('input');
 const select = document.querySelector('select');
 const cardsArea = document.querySelector('.cards');
 const button = document.querySelector('button');
-const countryAPI = 'https://restcountries.com/v3.1/all'
+const countryAPI = 'https://restcountries.com/v3.1/all';
 
 const getAPI = async url => {
     const response = await fetch(url)
@@ -30,6 +30,26 @@ const createElement = (tag, className) => {
     return el;
 }
 
+adjustingCardSizes = (card, img, apiName, apiRegion,apiFlag) => {
+    card.style.width = '18rem';
+    card.setAttribute('data-region', `${apiName} ${apiRegion}`);
+    img.style.height = '100%';
+    img.setAttribute('src', `${apiFlag}`);
+}
+
+const setDataCountryName = (img,title,infos,body,apiName) => {
+    img.setAttribute('data-country', `${apiName}`);
+    title.setAttribute('data-country', `${apiName}`);
+    infos.setAttribute('data-country', `${apiName}`);
+    body.setAttribute('data-country', `${apiName}`);
+}
+
+const setInnerHTML = (el, content) => {
+    el.innerHTML = content;
+}
+
+// const setCardAttribute = (card,img,title,infosArea,cardBody)
+
 const createCard = (img, countryName, countryPopulation, countryRegion, countryCapital) => {
     const card = createElement('div', 'card mb-4');
     const cardImg = createElement('img', 'card-img-top');
@@ -39,18 +59,16 @@ const createCard = (img, countryName, countryPopulation, countryRegion, countryC
     const cardRegion = createElement('p', 'card-text');
     const cardCapital = createElement('p', 'card-text');
 
-
-    card.style.width = '18rem';
-    card.setAttribute('data-region', `${countryName} ${countryRegion}`)
-
-    cardImg.setAttribute('src', `${img}`);
-    cardImg.style.height = '100%';
-
-    cardTitle.textContent = `${countryName}`
+    adjustingCardSizes(card, cardImg, countryName, countryRegion, img);
+    setDataCountryName(cardImg, cardTitle, cardPopulation, cardBody, countryName);
+    
+    // populando informações
+    cardTitle.innerHTML = `${countryName}`
     cardPopulation.innerHTML = textInfo('Population', countryPopulation)
     cardRegion.innerHTML = textInfo('Region', countryRegion)
     cardCapital.innerHTML = textInfo('Capital', countryCapital)
     
+    //montagem do card
     card.appendChild(cardImg);
     card.appendChild(cardBody);
     cardBody.appendChild(cardTitle);
@@ -101,9 +119,13 @@ const filterCards = (value,el) => {
 
 const toggleColor = (el, color) => el.setAttribute('class', color);
 
-createList();
-populateCards();
-openAPI(countryAPI);
+const onload = (api) => {
+    createList();
+    populateCards();
+    openAPI(api);
+}
+
+onload(countryAPI);
 
 input.addEventListener('keyup', e => {
     const cards = document.querySelectorAll('.card');
@@ -111,7 +133,7 @@ input.addEventListener('keyup', e => {
     filterCards(e.target.value,cards);
 })
 
-select.addEventListener('click', e => {
+select.addEventListener('change', e => {
     const cards = document.querySelectorAll('.card');
     filterCards(e.target.value,cards);
 })
@@ -120,4 +142,12 @@ button.addEventListener('click', () => {
     const cards = document.querySelectorAll('.card');
     toggleColor(header, 'bg-secondary')
     toggleColor(main,'bg-dark');    
+})
+
+cardsArea.addEventListener('click', ({ target }) => {
+    const countryName = target.dataset.country;
+    if(target.className.includes('card')){
+        localStorage.setItem('countryName',countryName);
+        window.location = 'pages/detail-page.html';
+    }
 })
