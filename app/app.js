@@ -6,6 +6,14 @@ const cardsArea = document.querySelector('.cards');
 const button = document.querySelector('button');
 const countryAPI = 'https://restcountries.com/v3.1/all';
 
+let cardInfos = {
+    img:'img', 
+    countryName:'countryName', 
+    countryPopulation: 'countryPopulation', 
+    countryRegion: 'countryRegion', 
+    countryCapital: 'countryCapital'
+    }
+
 const getAPI = async url => {
     const response = await fetch(url)
     try {
@@ -50,7 +58,7 @@ const setInnerHTML = (el, content) => {
 
 // const setCardAttribute = (card,img,title,infosArea,cardBody)
 
-const createCard = (img, countryName, countryPopulation, countryRegion, countryCapital) => {
+const createCard = ({ img, countryName,countryPopulation,countryRegion,countryCapital }) => {
     const card = createElement('div', 'card mb-4');
     const cardImg = createElement('img', 'card-img-top');
     const cardBody = createElement('div', 'card-body');
@@ -86,7 +94,11 @@ const textInfo = (textTile, info) => {
 const populateCards = async () => {
     const infos = await openAPI(countryAPI);
     infos.forEach((_,index) => {
-        createCard(infos[index].flags.svg,infos[index].name.common, infos[index].population, infos[index].region, infos[index].capital[index]);
+        createCard({img:infos[index].flags.svg, 
+            countryName:infos[index].name.common, 
+            countryPopulation:infos[index].population, 
+            countryRegion:infos[index].region, 
+            countryCapital:infos[index].capital});
     });
 }
 
@@ -121,7 +133,7 @@ const toggleColor = (el, color) => el.setAttribute('class', color);
 
 const onload = (api) => {
     createList();
-    populateCards();
+    populateCards(api);
     openAPI(api);
 }
 
