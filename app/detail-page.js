@@ -41,7 +41,7 @@ const createElement = (tag, className) => {
 const createCard = ({ img, countryName, countryPopulation, countryRegion, countrySubRagion, countryCapital, domain, currencies, languanges }) => {
     const imgArea = createElement('div', 'img-area');
     const cardImg = createElement('img', 'card-img');
-    const infosArea = createElement('div', 'infos-area');
+    const infosArea = createElement('div', 'infos-area flex-column flex-wrap');
     const countrytitle = createElement('h2', 'common-name');
     const nativeName = createElement('p', 'name');
     const population = createElement('p', 'population');
@@ -64,8 +64,11 @@ const createCard = ({ img, countryName, countryPopulation, countryRegion, countr
     countryCurrencies.innerHTML = textInfo('Currencies', currencies);
     countryLanguages.innerHTML = textInfo('Languages', languanges)
 
-    imgArea.style.width = '20rem';
+    imgArea.style.width = '30%';
     imgArea.style.heigth = '16rem';
+
+    infosArea.style.maxHeigth = '50px';
+    infosArea.style.width = '60%';
 
 
 
