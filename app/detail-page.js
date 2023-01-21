@@ -11,7 +11,7 @@ let cardInfos = {
     countryCapital: 'countryCapital',
     domain: 'domain',
     currencies: 'currencies',
-    languanges: 'languages'
+    languanges: 'languanges'
     }
 
 const getAPI = async url => {
@@ -39,18 +39,73 @@ const createElement = (tag, className) => {
 }
 
 const createCard = ({ img, countryName, countryPopulation, countryRegion, countrySubRagion, countryCapital, domain, currencies, languanges }) => {
-    const card = createElement('div', 'card mb-4');
-    const cardImg = createElement('img', 'card-img-top');
-    const cardBody = createElement('div', 'card-body');
-    const cardTitle = createElement('h5', 'card-title');
-    const cardPopulation = createElement('p', 'card-text');
-    const cardRegion = createElement('p', 'card-text');
-    const cardCapital = createElement('p', 'card-text');
+    const imgArea = createElement('div', 'img-area');
+    const cardImg = createElement('img', 'card-img');
+    const infosArea = createElement('div', 'infos-area');
+    const countrytitle = createElement('h2', 'common-name');
+    const nativeName = createElement('p', 'name');
+    const population = createElement('p', 'population');
+    const region = createElement('p', 'region');
+    const subRegion = createElement('p', 'sub-ragion');
+    const capital = createElement('p', 'capital');
+    const countryDomain = createElement('p','domain');
+    const countryCurrencies = createElement('p', 'text-info');
+    const countryLanguages = createElement('p', 'languages');
+
+    
+    cardImg.setAttribute('src', img);
+
+    countrytitle.innerHTML = `${countryName}`
+    nativeName.innerHTML = textInfo('Native Name', countryName);
+    population.innerHTML = textInfo('Population', countryPopulation);
+    region.innerHTML = textInfo('Region', countryRegion);
+    subRegion.innerHTML = textInfo('Sub-Region', countrySubRagion);
+    capital.innerHTML = textInfo('Capital', countryCapital);
+    countryCurrencies.innerHTML = textInfo('Currencies', currencies);
+    countryLanguages.innerHTML = textInfo('Languages', languanges)
+
+    imgArea.style.width = '20rem';
+    imgArea.style.heigth = '16rem';
+
+
+
+    infosArea.appendChild(countrytitle);
+    infosArea.appendChild(nativeName);
+    infosArea.appendChild(population);
+    infosArea.appendChild(region);
+    infosArea.appendChild(subRegion);
+    infosArea.appendChild(capital);
+    infosArea.appendChild(countryDomain);
+    infosArea.appendChild(countryCurrencies);
+    infosArea.appendChild(countryLanguages);
+
+    imgArea.appendChild(cardImg);
+    cardsArea.appendChild(imgArea);
+    cardsArea.append(infosArea);
 }
+
+const textInfo = (textTile, info) => {
+    const el = `<strong>${textTile}</strong>: ${info}`
+    return el;
+}
+
 const onload = async (api) => {
     const responses = await openAPI(api);
     const cardInEvidency = responses.filter((_, index) => responses[index].name.common === countryName);
-    cardsArea.innerHTML = `<h1>Exiba dos dados de <strong>${cardInEvidency[0].name.common}</strong></h1>`;
+    const data = cardInEvidency[0];
+    console.log(data)
+    createCard({
+        img:data.flags.svg,
+        countryName:data.name.common, 
+        countryPopulation:data.population,
+        countryRegion:data.region,
+        countrySubRagion:data.subregion,
+        countryCapital:data.capital,
+        domain:'domain',
+        currencies:data.currencies.name,
+        languanges:data.languages
+    })
+    // cardsArea.innerHTML = `<h1>Exiba dos dados de <strong>${cardInEvidency[0].name.common}</strong></h1>`;
 }
 
 onload(countryAPI);
