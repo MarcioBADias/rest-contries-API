@@ -1,0 +1,15 @@
+@media(max-width:500px){
+    .infos-box, .cards-box{
+        flex-direction: column;
+    }
+
+    .cards-box{
+        align-items: center;
+    }
+
+    .cards-box .img-area{
+        margin-bottom: 2rem;
+        min-width: 80vw;
+    }
+}
+

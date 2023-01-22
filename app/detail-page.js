@@ -41,7 +41,7 @@ const createElement = (tag, className) => {
 const createCard = ({ img, countryName, countryPopulation, countryRegion, countrySubRagion, countryCapital, domain, currencies, languages }) => {
     const imgArea = createElement('div', 'img-area');
     const cardImg = createElement('img', 'card-img');
-    const infosArea = createElement('div', 'card-body flex-column flex-wrap');
+    const infosArea = createElement('div', 'card-area flex-column flex-wrap');
     const countrytitle = createElement('h2', 'common-name');
     const nativeName = createElement('p', 'name');
     const population = createElement('p', 'population');
@@ -97,14 +97,16 @@ const onload = async (api) => {
     const cardInEvidency = responses.filter((_, index) => responses[index].name.common === countryName);
     const data = cardInEvidency[0];
 
-    data.languages = responses[0].languages;
-    for (const key in responses[0].languages) {
-        data.languages[key] = responses[0].languages[key];
-    }
+    data.languages = responses.filter((_, index) => responses[index].name.common === countryName);
+    data.languages.forEach((_,index) => {
+        for (const key in responses[index].languages) {
+            data.languages[key] = responses[index].languages[key];
+        }
+    });
 
     let languages = "";
     for (const key in data.languages) {
-        languages += data.languages[key];
+        languages = data.languages[key];
     }
 
     data.currencies = responses[0].currencies;

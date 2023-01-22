@@ -58,7 +58,7 @@ const setInnerHTML = (el, content) => {
 const createCard = ({ img, countryName,countryPopulation,countryRegion,countryCapital }) => {
     const card = createElement('div', 'card mb-4');
     const cardImg = createElement('img', 'card-img-top');
-    const cardBody = createElement('div', 'card-body');
+    const cardBody = createElement('div', 'card-body card-area');
     const cardTitle = createElement('h5', 'card-title');
     const cardPopulation = createElement('p', 'card-text');
     const cardRegion = createElement('p', 'card-text');

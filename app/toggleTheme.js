@@ -9,7 +9,7 @@ const inputSpace = document.querySelector('.custom-input');
 const toggleColor = (el, color) => el.setAttribute('class', color);
 
 button.addEventListener('click', () => {
-    const cardsBody = document.querySelectorAll('.card-body');
+    const cardsBody = document.querySelectorAll('.card-area');
     const lightDarkmode = document.querySelector('.toggle-btn');
     if(lightDarkmode.classList.value.includes('light')){
         lightDarkmode.classList.remove('light');
@@ -23,7 +23,7 @@ button.addEventListener('click', () => {
         if(aButton){
             toggleColor(aButton, 'btn text-light');
         }
-        cardsBody.forEach(card => toggleColor(card, 'card-body bg-dark text-light'));
+        cardsBody.forEach(card => toggleColor(card, 'card-area bg-dark text-light'));
         lightDarkmode.innerHTML = `Light Mode 
         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
         brightness_6
@@ -40,7 +40,7 @@ button.addEventListener('click', () => {
         if(aButton){
             toggleColor(aButton, 'btn');
         }     
-        cardsBody.forEach(card => toggleColor(card, 'card-body bg-light'));
+        cardsBody.forEach(card => toggleColor(card, 'card-area bg-light'));
         lightDarkmode.innerHTML = `Dark Mode 
         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
         brightness_4
