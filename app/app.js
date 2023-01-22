@@ -159,7 +159,8 @@ button.addEventListener('click', () => {
         toggleColor(header, 'bg-secondary');
         toggleColor(body,'bg-dark');
         toggleColor(main,'bg-dark');
-        toggleColor(input, 'bg-dark placeholder text-light form-control');
+        toggleColor(input, 'custom-input bg-dark text-light form-control');
+        input.focus();
         cardsBody.forEach(card => toggleColor(card, 'card-body bg-dark text-light'));
         lightDarkmode.innerHTML = `Light Mode 
         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
@@ -171,9 +172,8 @@ button.addEventListener('click', () => {
         toggleColor(header, 'bg-white');
         toggleColor(body,'bg-light');
         toggleColor(main,'bg-light');
-        toggleColor(input, 'bg-light form-control');
-        toggleColor(cardBody, 'bg-light');        
-        cardsBody.forEach(card => toggleColor(card, 'card-body'));
+        toggleColor(input, 'custom-input bg-light form-control');      
+        cardsBody.forEach(card => toggleColor(card, 'card-body bg-light'));
         lightDarkmode.innerHTML = `Dark Mode 
         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
         brightness_4
