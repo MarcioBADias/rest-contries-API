@@ -1,10 +1,6 @@
-const body = document.querySelector('body');
-const header = document.querySelector('header');
-const main = document.querySelector('main');
 const input = document.querySelector('input');
 const select = document.querySelector('select');
 const cardsArea = document.querySelector('.cards');
-const button = document.querySelector('button');
 const countryAPI = 'https://restcountries.com/v3.1/all';
 
 let cardInfos = {
@@ -130,8 +126,6 @@ const filterCards = (value,el) => {
     })
 }
 
-const toggleColor = (el, color) => el.setAttribute('class', color);
-
 const onload = (api) => {
     createList();
     populateCards(api);
@@ -149,37 +143,6 @@ input.addEventListener('keyup', e => {
 select.addEventListener('change', e => {
     const cards = document.querySelectorAll('.card');
     filterCards(e.target.value,cards);
-})
-
-button.addEventListener('click', () => {
-    const cardsBody = document.querySelectorAll('.card-body');
-    const lightDarkmode = document.querySelector('.toggle-btn');
-    if(lightDarkmode.classList.value.includes('light')){
-        lightDarkmode.classList.remove('light');
-        toggleColor(header, 'bg-secondary');
-        toggleColor(body,'bg-dark');
-        toggleColor(main,'bg-dark');
-        toggleColor(input, 'custom-input bg-dark text-light form-control');
-        input.focus();
-        cardsBody.forEach(card => toggleColor(card, 'card-body bg-dark text-light'));
-        lightDarkmode.innerHTML = `Light Mode 
-        <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
-        brightness_6
-        </span>`;
-        return;
-    }else{
-        lightDarkmode.classList.add('light');
-        toggleColor(header, 'bg-white');
-        toggleColor(body,'bg-light');
-        toggleColor(main,'bg-light');
-        toggleColor(input, 'custom-input bg-light form-control');      
-        cardsBody.forEach(card => toggleColor(card, 'card-body bg-light'));
-        lightDarkmode.innerHTML = `Dark Mode 
-        <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
-        brightness_4
-        </span>`;
-        return;
-    }
 })
 
 cardsArea.addEventListener('click', ({ target }) => {

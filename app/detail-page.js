@@ -38,10 +38,10 @@ const createElement = (tag, className) => {
     return el;
 }
 
-const createCard = ({ img, countryName, countryPopulation, countryRegion, countrySubRagion, countryCapital, domain, currencies, languanges }) => {
+const createCard = ({ img, countryName, countryPopulation, countryRegion, countrySubRagion, countryCapital, domain, currencies, languages }) => {
     const imgArea = createElement('div', 'img-area');
     const cardImg = createElement('img', 'card-img');
-    const infosArea = createElement('div', 'infos-area flex-column flex-wrap');
+    const infosArea = createElement('div', 'card-body flex-column flex-wrap');
     const countrytitle = createElement('h2', 'common-name');
     const nativeName = createElement('p', 'name');
     const population = createElement('p', 'population');
@@ -61,8 +61,8 @@ const createCard = ({ img, countryName, countryPopulation, countryRegion, countr
     region.innerHTML = textInfo('Region', countryRegion);
     subRegion.innerHTML = textInfo('Sub-Region', countrySubRagion);
     capital.innerHTML = textInfo('Capital', countryCapital);
-    countryCurrencies.innerHTML = textInfo('Currencies', currencies);
-    countryLanguages.innerHTML = textInfo('Languages', languanges)
+    countryCurrencies.innerHTML = `<strong>Currencies</strong>: ${currencies}`;
+    countryLanguages.innerHTML = `<strong>Languages</strong>: ${languages}`;
 
     imgArea.style.width = '30%';
     imgArea.style.heigth = '16rem';
@@ -96,7 +96,29 @@ const onload = async (api) => {
     const responses = await openAPI(api);
     const cardInEvidency = responses.filter((_, index) => responses[index].name.common === countryName);
     const data = cardInEvidency[0];
-    console.log(data)
+
+    data.languages = responses[0].languages;
+    for (const key in responses[0].languages) {
+        data.languages[key] = responses[0].languages[key];
+    }
+
+    let languages = "";
+    for (const key in data.languages) {
+        languages += data.languages[key];
+    }
+
+    data.currencies = responses[0].currencies;
+    for (const key in responses[0].currencies) {
+        data.currencies[key] = responses[0].currencies[key];
+    }
+
+    let currencies = "";
+    for (const key in data.currencies) {
+        currencies += data.currencies[key].name;
+    }
+
+    console.log(data);
+
     createCard({
         img:data.flags.svg,
         countryName:data.name.common, 
@@ -105,10 +127,9 @@ const onload = async (api) => {
         countrySubRagion:data.subregion,
         countryCapital:data.capital,
         domain:'domain',
-        currencies:data.currencies.name,
-        languanges:data.languages
+        currencies:currencies,
+        languages:languages
     })
-    // cardsArea.innerHTML = `<h1>Exiba dos dados de <strong>${cardInEvidency[0].name.common}</strong></h1>`;
 }
 
 onload(countryAPI);
