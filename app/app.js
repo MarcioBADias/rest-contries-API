@@ -1,5 +1,6 @@
-const main = document.querySelector('main');
+const body = document.querySelector('body');
 const header = document.querySelector('header');
+const main = document.querySelector('main');
 const input = document.querySelector('input');
 const select = document.querySelector('select');
 const cardsArea = document.querySelector('.cards');
@@ -151,9 +152,34 @@ select.addEventListener('change', e => {
 })
 
 button.addEventListener('click', () => {
-    const cards = document.querySelectorAll('.card');
-    toggleColor(header, 'bg-secondary')
-    toggleColor(main,'bg-dark');    
+    const cardsBody = document.querySelectorAll('.card-body');
+    const lightDarkmode = document.querySelector('.toggle-btn');
+    if(lightDarkmode.classList.value.includes('light')){
+        lightDarkmode.classList.remove('light');
+        toggleColor(header, 'bg-secondary');
+        toggleColor(body,'bg-dark');
+        toggleColor(main,'bg-dark');
+        toggleColor(input, 'bg-dark placeholder text-light form-control');
+        cardsBody.forEach(card => toggleColor(card, 'card-body bg-dark text-light'));
+        lightDarkmode.innerHTML = `Light Mode 
+        <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
+        brightness_6
+        </span>`;
+        return;
+    }else{
+        lightDarkmode.classList.add('light');
+        toggleColor(header, 'bg-white');
+        toggleColor(body,'bg-light');
+        toggleColor(main,'bg-light');
+        toggleColor(input, 'bg-light form-control');
+        toggleColor(cardBody, 'bg-light');        
+        cardsBody.forEach(card => toggleColor(card, 'card-body'));
+        lightDarkmode.innerHTML = `Dark Mode 
+        <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
+        brightness_4
+        </span>`;
+        return;
+    }
 })
 
 cardsArea.addEventListener('click', ({ target }) => {

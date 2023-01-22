@@ -1,10 +1,11 @@
 *{
     box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.form-control{
+/* .form-control{
     padding-left: 2.5rem;
     position: relative;
 }
@@ -47,5 +48,5 @@ textarea:focus, .form-control:focus {
 
  textarea:focus,.material-symbols-outlined:focus{
     display:none;
- }
+ } */
 
