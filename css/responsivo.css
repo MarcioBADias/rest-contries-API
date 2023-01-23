@@ -13,3 +13,19 @@
     }
 }
 
+@media(max-width:760px){
+    .infos-box, .cards-box{
+       display: flex;
+    }
+
+    .cards-box{
+        align-items: center;
+    }
+
+    .cards-box .img-area{
+        margin-bottom: 2rem;
+        min-width: 80vw;
+    }
+}
+
+

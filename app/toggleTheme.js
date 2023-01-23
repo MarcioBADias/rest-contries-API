@@ -13,7 +13,7 @@ button.addEventListener('click', () => {
     const lightDarkmode = document.querySelector('.toggle-btn');
     if(lightDarkmode.classList.value.includes('light')){
         lightDarkmode.classList.remove('light');
-        toggleColor(header, 'bg-secondary');
+        toggleColor(header, 'bg-secondary container-md');
         toggleColor(body,'bg-dark');
         toggleColor(main,'bg-dark');
         if(inputSpace){
@@ -23,7 +23,7 @@ button.addEventListener('click', () => {
         if(aButton){
             toggleColor(aButton, 'btn text-light');
         }
-        cardsBody.forEach(card => toggleColor(card, 'card-area bg-dark text-light'));
+        cardsBody.forEach(card => toggleColor(card, 'card-body card-area bg-dark text-light'));
         lightDarkmode.innerHTML = `Light Mode 
         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
         brightness_6
@@ -31,7 +31,7 @@ button.addEventListener('click', () => {
         return;
     }else{
         lightDarkmode.classList.add('light');
-        toggleColor(header, 'bg-white');
+        toggleColor(header, 'bg-white container-md');
         toggleColor(body,'bg-light');
         toggleColor(main,'bg-light');
         if(inputSpace){
@@ -40,7 +40,7 @@ button.addEventListener('click', () => {
         if(aButton){
             toggleColor(aButton, 'btn');
         }     
-        cardsBody.forEach(card => toggleColor(card, 'card-area bg-light'));
+        cardsBody.forEach(card => toggleColor(card, 'card-body card-area'));
         lightDarkmode.innerHTML = `Dark Mode 
         <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle toggle-icon">
         brightness_4
